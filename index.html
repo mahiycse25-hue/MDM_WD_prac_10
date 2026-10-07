@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Expense Tracker</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <div class="max-w-xl mx-auto p-5">
+
+        <!-- Heading -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-blue-600">
+                Daily Expense Tracker
+            </h1>
+
+            <p class="text-gray-600 mt-2">
+                Keep track of your daily expenses
+            </p>
+        </div>
+
+
+        <!-- Add Expense -->
+        <div class="bg-white p-5 rounded-lg shadow mb-5">
+
+            <h2 class="text-xl font-semibold mb-4">
+                Add Expense
+            </h2>
+
+            <input
+                type="text"
+                id="expenseName"
+                placeholder="Expense name"
+                class="w-full border p-3 rounded mb-3"
+            >
+
+            <input
+                type="number"
+                id="expenseAmount"
+                placeholder="Amount"
+                class="w-full border p-3 rounded mb-3"
+            >
+
+            <button
+                onclick="addExpense()"
+                class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
+                Add Expense
+            </button>
+
+        </div>
+
+
+        <!-- Total Expense -->
+        <div class="bg-blue-600 text-white p-5 rounded-lg shadow mb-5 text-center">
+
+            <p class="text-lg">
+                Total Expense
+            </p>
+
+            <h2 class="text-3xl font-bold mt-1">
+                ₹<span id="total">80</span>
+            </h2>
+
+        </div>
+
+
+        <!-- Expense List -->
+        <div class="bg-white p-5 rounded-lg shadow">
+
+            <h2 class="text-xl font-semibold mb-4">
+                My Expenses
+            </h2>
+
+            <ul id="expenseList" class="space-y-3">
+
+                <li class="flex justify-between items-center
+                           bg-gray-100 p-3 rounded">
+
+                    <span>Travel</span>
+
+                    <div class="flex gap-3 items-center">
+                        <span>₹50</span>
+
+                        <button
+                            onclick="deleteExpense(this, 50)"
+                            class="text-red-500">
+                            Delete
+                        </button>
+                    </div>
+
+                </li>
+
+
+                <li class="flex justify-between items-center
+                           bg-gray-100 p-3 rounded">
+
+                    <span>Snacks</span>
+
+                    <div class="flex gap-3 items-center">
+                        <span>₹30</span>
+
+                        <button
+                            onclick="deleteExpense(this, 30)"
+                            class="text-red-500">
+                            Delete
+                        </button>
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let total = 80;
+
+
+        function addExpense() {
+
+            let name =
+                document.getElementById("expenseName").value;
+
+            let amount =
+                document.getElementById("expenseAmount").value;
+
+
+            if (name === "" || amount === "") {
+
+                alert("Please enter expense details");
+
+                return;
+            }
+
+
+            let li = document.createElement("li");
+
+            li.className =
+                "flex justify-between items-center bg-gray-100 p-3 rounded";
+
+
+            li.innerHTML = `
+                <span>${name}</span>
+
+                <div class="flex gap-3 items-center">
+
+                    <span>₹${amount}</span>
+
+                    <button
+                        onclick="deleteExpense(this, ${amount})"
+                        class="text-red-500">
+                        Delete
+                    </button>
+
+                </div>
+            `;
+
+
+            document.getElementById("expenseList")
+                .appendChild(li);
+
+
+            total = total + Number(amount);
+
+            document.getElementById("total")
+                .innerText = total;
+
+
+            document.getElementById("expenseName").value = "";
+
+            document.getElementById("expenseAmount").value = "";
+        }
+
+
+        function deleteExpense(button, amount) {
+
+            button.parentElement.parentElement.remove();
+
+            total = total - Number(amount);
+
+            document.getElementById("total")
+                .innerText = total;
+        }
+
+    </script>
+
+</body>
+</html>
